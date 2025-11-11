@@ -1,0 +1,29 @@
+{
+  "name": "erc20-admin",
+  "version": "1.0.0",
+  "description": "Custom ERC20 token with admin panel (TypeScript + Hardhat)",
+  "scripts": {
+    "build": "npx hardhat compile",
+    "test": "npx hardhat test",
+    "node": "npx hardhat node",
+    "deploy:local": "npx hardhat run scripts/deploy.ts --network localhost",
+    "deploy:sepolia": "npx hardhat run scripts/deploy.ts --network sepolia",
+    "verify:sepolia": "npx hardhat run scripts/verify.ts --network sepolia",
+    "export:local": "npx hardhat run scripts/export-abi.ts --network localhost",
+    "export:sepolia": "npx hardhat run scripts/export-abi.ts --network sepolia"
+  },
+  "devDependencies": {
+    "hardhat": "2.26.1",
+    "typescript": "5.6.3",
+    "ts-node": "10.9.2",
+    "@types/node": "20.11.30",
+    "@nomicfoundation/hardhat-toolbox": "5.0.0",
+    "@nomicfoundation/hardhat-ethers": "3.1.0",
+    "dotenv": "16.4.5"
+  },
+  "dependencies": {
+    "ethers": "6.14.0",
+    "@openzeppelin/contracts": "5.0.2"
+  }
+}
+
