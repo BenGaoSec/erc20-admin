@@ -1,6 +1,3 @@
-/**
- * Deploy MyToken with human-friendly params from .env (fallback to defaults)
- */
 import { ethers } from "hardhat";
 import * as dotenv from "dotenv";
 dotenv.config();
@@ -11,16 +8,23 @@ async function main() {
   const DECIMALS = Number(process.env.TOKEN_DECIMALS || 18);
   const INITIAL_SUPPLY_TOKENS = process.env.INITIAL_SUPPLY_TOKENS || "1000000";
 
-  // Convert human amount to smallest units to avoid 10^n mistakes
   const initialSupply = ethers.parseUnits(INITIAL_SUPPLY_TOKENS, DECIMALS);
 
-  const MyToken = await ethers.getContractFactory("MyToken");
-  const token = await MyToken.deploy(NAME, SYMBOL, initialSupply);
-  await token.waitForDeployment();
-  const address = await token.getAddress();
+  // 注意：两个文件里 contract 名相同，所以要写全路径
+  const MyTokenV1 = await ethers.getContractFactory("contracts/MyToken.sol:MyToken");
+  const MyTokenV2 = await ethers.getContractFactory("contracts/OwnerToken.sol:MyToken");
 
-  console.log(`✅ Deployed MyToken at: ${address}`);
-  console.log({ NAME, SYMBOL, DECIMALS, INITIAL_SUPPLY_TOKENS });
+  const tokenV1 = await MyTokenV1.deploy(NAME, SYMBOL, initialSupply);
+  const tokenV2 = await MyTokenV2.deploy(NAME, SYMBOL, initialSupply);
+
+  await tokenV1.waitForDeployment();
+  await tokenV2.waitForDeployment();
+
+  const addressV1 = await tokenV1.getAddress();
+  const addressV2 = await tokenV2.getAddress();
+
+  console.log(`✅ Deployed MyTokenV1 at: ${addressV1}`);
+  console.log(`✅ Deployed MyTokenV2 at: ${addressV2}`);
 }
 
 main().catch((err) => {
