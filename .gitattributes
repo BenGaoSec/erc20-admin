@@ -1,0 +1,3 @@
+*.sol linguist-detectable=true
+*.sol linguist-language=Solidity
+contracts/* linguist-detectable=true
